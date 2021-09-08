@@ -10,6 +10,7 @@ function ForgotPasswordComponent(){
     const [emailError, setEmailError] = useState(false);
     const [message, setMessage] = useInput('');
 
+    // 이메일 정규식 검사
     const checkEmail = useCallback((e)=>{
         const regex = /^[a-z0-9.-_]+@([a-z0-9-]+.)+[a-z]{2,6}$/;    // user1@gmail.com
         if(regex.test(e.target.value)){

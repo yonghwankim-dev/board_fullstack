@@ -12,8 +12,8 @@ function LoginComponent(){
     const [remember, setRmember] = useState(false);
     const [message, setMessage] = useInput('');
 
-    // Remember 체크박스의 값을 반전시킨다.
-    const onToggleRemember = useCallback((e)=>{
+    // Remember 체크박스의 값(true/false) 반전
+    const onToggleRemember = useCallback(()=>{
         setRmember(!remember);
     },[remember,setRmember]);
 

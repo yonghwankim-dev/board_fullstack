@@ -1,17 +1,31 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = "http://localhost:8080/home";
+const USER_API_BASE_URL = "http://localhost:8080";
 
 class ApiService{
     // 홈화면으로 이동
     fetchHome = ()=>{
-        return axios.get(USER_API_BASE_URL);
+        return axios.get(USER_API_BASE_URL+"/home");
     }
     
     // 회원가입
     addMember = (member)=>{
-        return axios.post(USER_API_BASE_URL+'/signUp',member);
+        return axios.post(USER_API_BASE_URL+'/member',member);
     }
+    // 아이디 중복 체크
+    checkDuplicateID = (member)=>{
+        return axios.post(USER_API_BASE_URL+"/member/checkID",member);
+    }
+    // 이메일 중복 체크
+    checkDuplicateEmail = (member)=>{
+        return axios.post(USER_API_BASE_URL+"/member/checkEmail",member);
+    }
+    // 연락처 중복 체크
+    checkDuplicatePhone = (member)=>{
+        return axios.post(USER_API_BASE_URL+"/member/checkPhone",member);
+    }
+
+
     // 로그인
     login = (member)=>{
         return axios.post(USER_API_BASE_URL+'/login',member);

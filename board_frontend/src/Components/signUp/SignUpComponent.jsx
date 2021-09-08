@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ApiService from "../../Api/ApiService";
 import useInput from "../customhook/CustomHook";
+import {isDuplicatedInfo, checkDuplicateID, checkDuplicateEmail, checkDuplicatePhone} from './isDuplicatedInfo';
 
 function SignUpComponent(){
     
@@ -24,7 +25,6 @@ function SignUpComponent(){
     const [passwordEqualError, setPasswordEqualError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [birthError, setBirthError] = useState(false);
-    const [message, setMessage] = useInput('');
     const history = useHistory();
 
     // 회원 필드 유효성 검사
@@ -90,12 +90,7 @@ function SignUpComponent(){
         }
     },[setEmail, setEmailError]);
 
-    const onChangePhone = useCallback((e) =>{
-        const regex = /^[0-9\b -]{0,13}$/;  // 010-0000-0000 형식
-        if(regex.test(e.target.value)){
-            setPhone(e.target.value);
-        }
-    },[setPhone]);
+
 
     const checkBirth = useCallback((e)=>{
         const in_birth = new Date(e.target.value);
@@ -113,6 +108,13 @@ function SignUpComponent(){
 
     },[setBirth, setBirthError]);
 
+    const onChangePhone = useCallback((e) =>{
+        const regex = /^[0-9\b -]{0,13}$/;  // 010-0000-0000 형식
+        if(regex.test(e.target.value)){
+            setPhone(e.target.value);
+        }
+    },[setPhone]);
+
     useEffect(()=>{
         if(phone.length===11){
             setPhone(phone.replace(/(\d{3})(\d{4})(\d{4})/,'$1-$2-$3'));
@@ -122,8 +124,6 @@ function SignUpComponent(){
         }
     },[phone]);
 
-    
-
     // 회원가입 정보 추가
     const onSubmit = useCallback((e)=>{
         e.preventDefault();
@@ -131,12 +131,14 @@ function SignUpComponent(){
         // 비밀번호 일치 검사
         if(password!==confirmPassword)
         {
-            return setPasswordEqualError(true);
+            setPasswordEqualError(true);
+            return;
         }else{
             setPasswordEqualError(false);
         }
-        
 
+        
+        // 입력받은 회원 데이터 저장
         let member = {
             "name" : name,
             "id" : id,
@@ -147,21 +149,22 @@ function SignUpComponent(){
             "gender" : gender,
         }
 
-        // 서버에 회원 가입 요청
-        ApiService.addMember(member)
-            .then(res =>{
-                setMessage(member.name+'님이 성공적으로 등록되었습니다.');
-                console.log(message);
-                history.push('/home');
-            })
-            .catch(err =>{
-                console.log('addMember() Error',err);
-            });
+        // 아이디, 이메일, 연락처 중복 체크 후 회원가입 기능 수행
+        isDuplicatedInfo(member)
+        .then(checkDuplicateID)
+        .then(checkDuplicateEmail)
+        .then(checkDuplicatePhone)
+        .then(ApiService.addMember)
+        .then(res=>{
+            alert(member.name+"님이 성공적으로 등록되었습니다.");
+            history.push('/home');
+        })
+        .catch((err)=>{
+            alert(err);
+        });
+        
+    },[name,id,password,confirmPassword,email,phone,birth,gender,history]);
 
-
-    },[name,id,password,confirmPassword,email,phone,birth,gender,message, history, setMessage]);
-
-    
 
     return (
         <>

@@ -86,8 +86,6 @@ function BoardComponent(){
 
     // 게시글 목록 프레임
     const PostingFactory = (posting)=>{
-        // const order = (posting.regnum%2 === 0 ? 'even' : 'odd');
-        // const sorting = 'sorting_'+posting.regnum;
         const pageUrl= '/boardDetail/'+posting.regnum;
         return (
             <tr key={posting.regnum}>
