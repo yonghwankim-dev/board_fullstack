@@ -17,4 +17,7 @@
 	<select id="checkDuplicatePhone" parameterType="com.example.demo.vo.MemberVO" resultType="_int">
 		SELECT count(phone) FROM member WHERE phone=#{phone}
 	</select>
+	<select id="loginMember" parameterType="com.example.demo.vo.MemberVO" resultType="_int">
+		SELECT count(id) FROM member WHERE id=#{id} and password=#{password}
+	</select>
 </mapper>

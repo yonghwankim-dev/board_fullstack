@@ -10,7 +10,6 @@ function LoginComponent(){
     const [id, setId] = useInput('');
     const [password, setPassword] = useInput('');
     const [remember, setRmember] = useState(false);
-    const [message, setMessage] = useInput('');
 
     // Remember 체크박스의 값(true/false) 반전
     const onToggleRemember = useCallback(()=>{
@@ -23,20 +22,26 @@ function LoginComponent(){
         let member = {
             "id" : id,
             "password" : password,
-            "remember" : remember,
+            "remember" : remember
         }
 
         // 서버에 로그인 요청
         ApiService.login(member)
-            .then(res =>{
-                setMessage(member.id+'님이 성공적으로 등록되었습니다.');
-                console.log(message);
-                history.push('/home');
+            .then(res =>{    
+                if(res.data===1)
+                {
+                    history.push('/home');
+                }
+                else
+                {
+                    alert("ID 또는 비밀번호가 일치하지 않습니다.");
+                }
+                
             })
             .catch(err =>{
                 console.log('login Error',err);
             });
-    },[id,password,remember,message,setMessage,history]);
+    },[id,password,remember,history]);
 
     
     return (

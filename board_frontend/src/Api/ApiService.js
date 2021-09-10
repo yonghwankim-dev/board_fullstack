@@ -28,7 +28,7 @@ class ApiService{
 
     // 로그인
     login = (member)=>{
-        return axios.post(USER_API_BASE_URL+'/login',member);
+        return axios.post(USER_API_BASE_URL+'/member/login',member);
     }
     
     // 비밀번호 초기화
