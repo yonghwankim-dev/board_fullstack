@@ -6,7 +6,6 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RestController"/>
     <fullyQualifiedTypeName name="com.example.demo.vo.MemberVO"/>
-    <fullyQualifiedTypeName name="com.example.demo.mapper.MemberMapper"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="org.apache.ibatis.annotations.Mapper"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
@@ -23,4 +22,8 @@
     <fullyQualifiedTypeName name="lombok.AllArgsConstructor"/>
     <fullyQualifiedTypeName name="org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration"/>
     <fullyQualifiedTypeName name="org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter"/>
+    <fullyQualifiedTypeName name="com.example.demo.mapper.MemberMapper"/>
+    <fullyQualifiedTypeName name="org.springframework.security.crypto.password.PasswordEncoder"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
+    <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 </qualifiedTypeNameHistroy>
